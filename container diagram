@@ -1,0 +1,39 @@
+@startuml Diagrama de Context C4 pentru eMag
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Diagrama de Context pentru Sistemul E-Commerce eMag
+
+Person(customer, "Client", "utilizator al site ului")
+System(emagWebsite, "Site-ul eMag", "Permite clienților să navigheze și să cumpere produse online")
+System(contclient, "Cont Client", "Clientul poate adauga produse in cos sau in lista de favorite; tot aici sunt stocate datele personale")
+System(sistemdecautare, "Sistem de cautare", "Permite clientilor sa caute un anumit produs")
+System(comanda, "Comanda", "Comanda pe care o poate face un client")
+System(metodalivrare, "Metoda de livrare", "Clientul poate alege o metoda de livrare pe care o prefera")
+System(metodaplata, "Metoda de plata", "Clientul poate alege o metoda de plata pe care o prefera: online sau la livrare")
+System(produse, "Produs", "Fiecare produs are o incadrare intr-o categorie si specificatii")
+System(recenzie, "Recenzie", "Fiecare produs are recenzii de la alti cumaparatori")
+System(vanzator, "Vanzator", "Fiecare produs are un vanzator")
+System_Ext(paymentGateway, "Gateway de Plată", "Gestionează procesarea plăților")
+System_Ext(shippingService, "Serviciu de Livrare", "Gestionează livrarea comenzilor")
+System_Ext(emailService, "Serviciu de Email", "Trimite notificări și emailuri de marketing")
+
+Rel(emagWebsite, sistemdecautare,  "Utilizeaza")
+Rel(emagWebsite, contclient, "Utilizeaza")
+Rel(contclient, comanda, "plaseaza")
+Rel(comanda, metodaplata,  "Utilizează")
+Rel(comanda, metodalivrare,  "Utilizează")
+Rel(sistemdecautare, produse,  "Utilizează")
+Rel(produse, recenzie,  "Utilizează")
+Rel(produse, vanzator,  "Plaseaza comanda")
+Rel(emagWebsite, sistemdecautare,  "Utilizează")
+Rel(emagWebsite, paymentGateway, "Procesează plăți")
+Rel(emagWebsite, shippingService, "Aranjează livrări")
+Rel(emagWebsite, emailService, "Trimite emailuri")
+Rel(paymentGateway, emailService, "Confirmă plata")
+Rel(emailService, customer, "Trimite confirmări de comandă și actualizări")
+Rel(shippingService, customer, "Livrează produse")
+
+@enduml
