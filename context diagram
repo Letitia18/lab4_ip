@@ -1,0 +1,28 @@
+@startuml eMag C4 Context Diagram
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Context Diagram for eMag E-Commerce System
+
+Person(customer, "Customer", "A person who wants to purchase products online")
+
+System(emagWebsite, "eMag Website", "Allows customers to browse and purchase products online")
+
+System_Ext(paymentGateway, "Payment Gateway", "Handles payment processing")
+System_Ext(shippingService, "Shipping Service", "Manages delivery of orders")
+System_Ext(emailService, "Email Service", "Sends notifications and marketing emails")
+
+
+Rel(customer, emagWebsite, "Uses")
+
+Rel(emagWebsite, paymentGateway, "Processes payments")
+Rel(emagWebsite, shippingService, "Arranges deliveries")
+Rel(emagWebsite, emailService, "Sends emails")
+
+Rel(paymentGateway, emailService, "Confirms payment")
+Rel(emailService, customer, "Sends order confirmations and updates")
+Rel(shippingService, customer, "Delivers products")
+
+@enduml
